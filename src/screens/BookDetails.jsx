@@ -32,8 +32,37 @@ export default function BookDetails({ navigation, route }) {
     const imageSmallUri = book?.cover?.thumbnail;
     const imageUri = book?.cover?.default;
 
+    const getDescriptionText = (summary) => {
+        if (!summary) return "";
+
+        if (typeof summary === "string") {
+            return summary;
+        }
+
+        if (Array.isArray(summary)) {
+            return summary
+                .map(item => getDescriptionText(item))
+                .filter(Boolean)
+                .join("\n\n");
+        }
+
+        if (typeof summary === "object") {
+            if (summary.text) {
+                return summary.text;
+            }
+
+            if (summary.content) {
+                return getDescriptionText(summary.content);
+            }
+        }
+        return "";
+    };
+
+
+    //           {"content": [{"content": [Array], "type": "paragraph"}], "type": "doc"}
+
     return (
-        <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+        <SafeAreaView style={styles.container} edges={["left", "right"]}>
             <StatusBar style="auto" />
 
             {imageUri ? (
@@ -78,7 +107,10 @@ export default function BookDetails({ navigation, route }) {
             )}
 
             <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
-                <Text style={styles.title}>{book?.rus_name || book?.name}</Text>
+                <View style={styles.bookInfoContainer}>
+                    <Text style={styles.title}>{book?.rus_name || book?.name}</Text>
+                    <Text numberOfLines={4} style={styles.description}>{getDescriptionText(book?.summary)}</Text>
+                </View>
             </ScrollView>
 
 
@@ -86,6 +118,9 @@ export default function BookDetails({ navigation, route }) {
 
     );
 }
+
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -132,12 +167,26 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 
+    bookInfoContainer: {
+
+        alignItems: "center",
+        padding: 5,
+        justifyContent: "center",
+    },
+
     title: {
         width: "100%",
-        textAlign: "center",
         fontSize: 18,
         fontWeight: "800",
         color: theme.colors.text,
+    },
+
+    description: {
+        width: "100%",
+        marginTop: 10,
+        fontSize: 14,
+        fontWeight: "400",
+        color: theme.colors.textSecondary,
     },
 
     scrollContent: {
