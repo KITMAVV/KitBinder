@@ -40,4 +40,5 @@ yarn-error.*
 /ios
 /android
 
-test.js
+stuff
+src/converter

@@ -1,6 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View,} from "react-native";
 import {Image} from "expo-image";
 
+import { theme } from "../../theme/theme";
+
 export default function BookCard({ book, onPress }) {
     const title = String(book?.rus_name || book?.name || "");
     const imageUri = book.cover?.default || book.cover?.thumbnail;
@@ -83,15 +85,16 @@ export default function BookCard({ book, onPress }) {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: "#fff",
+        backgroundColor: theme.components.bookCard.background,
         borderRadius: 13,
         borderWidth: 1,
-        borderColor: "#efefef",
+        borderColor: theme.components.bookCard.border,
         width: 180,
         overflow: "hidden",
 
 
-        boxShadow: "5px 3px 4px rgba(0,0,0,0.03)",
+        boxShadow: `5px 3px 4px ${theme.components.bookCard.shadow}`,
+
 
     },
 
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
         height: 210,
         borderRadius: 8,
         marginBottom: 8,
-        backgroundColor: "#676767",
+        backgroundColor: theme.components.bookCard.placeholder,
     },
 
     title: {
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         minHeight: 36,
         marginBottom: 6,
+        color: theme.components.bookCard.title,
     },
 
     infoContainer: {
@@ -138,13 +142,16 @@ const styles = StyleSheet.create({
 
     infoText: {
         fontSize: 12,
-        color: "#555",
+        color: theme.components.bookCard.text,
     },
 
 
     status: {
         fontSize: 12,
         fontWeight: "bold",
-        color: "#404040",
+        color: theme.components.bookCard.status,
     },
 });
+
+
+//         theme.components.bookCard.pupupupup

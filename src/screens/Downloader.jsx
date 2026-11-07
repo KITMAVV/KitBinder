@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 
-export default function DownloaderScreen({ navigation, route }) {
+export default function Downloader({ navigation, route }) {
 
     const { slug_url } = route.params;
 

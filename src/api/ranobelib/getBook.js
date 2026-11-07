@@ -49,7 +49,7 @@ async function getBook(slug_url) {
         }
 
         const json = await response.json();
-        console.log("Fetched book info!");
+        console.log("Fetched book info!", json.data);
 
         return json.data ?? [];
 
